@@ -68,7 +68,9 @@ gulp.task('css:purge', () => {
 		extractors: [{
 			extractor: CustomExtractor,
 			extensions: ['twig','html','js','vue','tag']
-		}]
+		}],
+		whitelistPatterns: [],
+		whitelistPatternsChildren: [] //use a regex - /gfield_wrap/ - this would let through gfield_wrap and all it's children
 	}))
 	.pipe(cleancss())
 	.pipe(rename('style.min.css'))
