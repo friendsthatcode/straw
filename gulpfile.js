@@ -67,11 +67,12 @@ gulp.task('css:purge', () => {
 		content: [paths.twig.watch],
 		extractors: [{
 			extractor: CustomExtractor,
-			extensions: ['twig','html','js','vue','tag']
+			extensions: ['twig','html','js','vue','tag','php']
 		}],
-		whitelistPatterns: [],
-		whitelistPatternsChildren: [] //use a regex - /gfield_wrap/ - this would let through gfield_wrap and all it's children
+		whitelistPatterns: [/ui-/, /is/, /aos-/, /b-/, /slick-/, /gform/, /gfield/, /has/, /toggle/],
+		whitelistPatternsChildren: [/form-wrap$/, /header_/]
 	}))
+	.pipe(gulp.dest(paths.styles.dest))
 	.pipe(cleancss())
 	.pipe(rename('style.min.css'))
 	.pipe(gulp.dest(paths.styles.dest))
@@ -102,7 +103,7 @@ gulp.task('webpack', () => {
 gulp.task('webpack:dev-server', () => {
 	let compiler = webpack(webpackConfig);
 
-	gulp.watch(paths.styles.watch, ['styles']);
+	gulp.watch(paths.styles.watch, gulp.series('styles', 'css:purge'));
 
 	browserSync.init({
 		proxy: {
