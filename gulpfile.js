@@ -85,9 +85,9 @@ gulp.task('svg:store', () => {
             pretty: true
         },
         plugins: [
-            // {
-            //     removeStyleElement: true
-            // }
+            {
+                removeViewBox: false
+            }
         ]
     }))
     .pipe(svgstore())
