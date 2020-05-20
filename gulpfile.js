@@ -103,7 +103,7 @@ gulp.task('webpack', () => {
 gulp.task('webpack:dev-server', () => {
 	let compiler = webpack(webpackConfig);
 
-	gulp.watch(paths.styles.watch, gulp.series('styles', 'css:purge'));
+	gulp.watch([paths.styles.watch, , paths.twig.watch], gulp.series('styles', 'css:purge'));
 
 	browserSync.init({
 		proxy: {
